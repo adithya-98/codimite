@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+improt java.util.List;
+
+class Technician{
+    String name;
+    String date;
+    String jobType;
+    String startTime;
+    String endTime;
+
+    Technician(String name,String date,String jobType,String startTime,String endTime)
+        this.name = name;
+        this.date = date;
+        this.jobType = jobType;
+        this.startTime = startTime;
+        this.endTime = endTime;
+}
+
+public class Main{
+    public static int toMinutes(String time){
+        String[] parts = time.split("\\.");
+        return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
+    }
+
+    public static String toTimeString(int minutes){
+        int hours = minutes/60;
+        int mins = minutes%60;
+        return String.format("%02d.%02d", hours, mins);
+    }
+
+    public static List<String> getAvailableSlots(String date, String jobType, int duration)
+        List<String>availableSlots = new ArrayList<>();
+        int startOfDay = 9*60;
+        int endOfDay = 17*60;
+
+        //this is to create a timeslot with 10min intervals
+        boolean[] slots = new boolean[(endOfDay - startOfDay)/10];
+
+        for (Technician tech : appointments){
+            if(tech.date.equals(date)&& tech.jobType.equals(jobType)){
+                int start = toMinutes(tech.startTime);
+                int end = toMinutes(tech.endTime);
+                for (int i= start; i<end; i+=10){
+                    slots[(i-startOfday)/10]=true;
+                }
+            }
+        }
+}
